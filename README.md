@@ -11,6 +11,7 @@ Implementation of 3 different types of ciphers:
 	       -Shift Cipher
 	       -Affine Cipher
 	       -Vigenere Cipher
+	       -Bifid Cipher
 
 Shift Cipher:
       Takes an integer a as the key.
@@ -33,6 +34,35 @@ Vigenere Cipher:
 
       Giving:   rbpdpo
 
+Bifid Cipher:
+	Takes a String s as the key.
+	Encrypts the plaintext by applying the Bifid Cipher to each character using a 25 letter 'key square' example of encryption using this 25 letter 'key square'
+	   
+	   1 2 3 4 5
+	   
+	1| p h q g m
+	
+	2| e a y l n
+	
+	3| o f d x k
+	
+	4| r c v s z
+	
+	5| w b u t i
+	
+	e.g.
+	plaintext:   defend the east wall of the castle
+	
+	step 1: row  323223 512 2245 5222 33 512 424522
+	        col  312153 421 1244 1244 12 421 224441
+	        
+	step 2:      32322 35122 24552 22335 12424 522 
+	             31215 34211 24412 44124 21224 441 
+	             
+	step 3:      3232231215 3512234211 2455224412 2233544124 1242421224 522441
+	
+	step 4:      f f y h m  k h y c p  l i a s h  a d t r l  h c c h l  b l r
+
 Format of Input for GUI:
 
 General:
@@ -46,3 +76,6 @@ Affine Cipher:
 
 Vigenere Cipher:
 	Key text field should contain a string of characters.
+	
+Bifid Cipher:
+	The Plaintext can have uppercase or lowercase letters and spaces but numbers will result in an error. The key has to have captial letters and no numbers. The key setter will parse out all non capital letters.
