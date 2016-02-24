@@ -349,7 +349,7 @@ public class CryptographyGUI
 		    
                 } catch (Exception ex) {
                     // create popup
-                    messagePopUp("WRONG KEYS", "All Cipher Input Error");
+                    messagePopUp("Wrong keys, please see info", "All Cipher Input Error");
                 }
             }
         });		    
