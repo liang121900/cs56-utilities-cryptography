@@ -28,11 +28,17 @@ public class CryptographyGUI
 
     String plainText = null;
     String cipherText = null;
-    int keyA, keyB;
+    int keyA, keyB, affineKeyA, affineKeyB;
     String key;
+    String[] inputs;
+    String[] decryptInputs;
+    String[] shiftInputs;
+    String[] affineInputs;
+    String[] vigenereInputs;
+    String[] bifidInputs;
 
     JFrame frame;
-    JButton shift, vigenere, affine, bifid, mode, info;
+    JButton shift, vigenere, affine, bifid, all, mode, info;
     JPanel buttonPanel, cipherButtonPanel, modeButtonInfoPanel, textFieldPanel, inputTextPanel, inputKeyTextPanel;
     JTextField input, keyInput;
     JLabel output, inputText, inputKeyText;
@@ -59,7 +65,7 @@ public class CryptographyGUI
 
         // setup overall frame options
         frame = new JFrame();
-        frame.setSize(520,180);
+        frame.setSize(720,180);
         frame.setTitle("Cryptography Interface");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -100,24 +106,29 @@ public class CryptographyGUI
             public void actionPerformed(ActionEvent e) {
                 // get text from plaintext text field
                 plainText = input.getText();
+		inputs = plainText.split("\\s+");
 
                 // get key from key text field and set it as key in cipher object
                 try {
                 keyA = Integer.parseInt(keyInput.getText());
                 shiftCipher.setCipherKey(keyA);
-
+		cipherText = "";
                 // checks if encrypting or decrypting
-                if (encryptMode)
-                    cipherText = shiftCipher.encrypt(plainText);
-                else
-                    cipherText = shiftCipher.decrypt(plainText);
-
+		for(int i = 0; i < inputs.length; i++) {
+		    if (encryptMode)
+			cipherText += shiftCipher.encrypt(inputs[i]);
+		    else
+			cipherText += shiftCipher.decrypt(inputs[i]);
+		    if(i < inputs.length - 1)
+			cipherText += " ";
+		}
+		
                 // puts result in the output label
                 output.setText(cipherText);
                 } catch (Exception ex) {
                 // create popup
                 messagePopUp("Incorrect input for Shift Cipher.\nPlaintext is " +
-                        "a string and can't have spaces or non-alphabetic " +
+                        "a string and can't have non-alphabetic " +
                         "characters.\nKey should contain a single integer within " +
                         "the range 0 to 25.\n", "Shift Cipher Input Error");
                 }
@@ -128,7 +139,8 @@ public class CryptographyGUI
             public void actionPerformed(ActionEvent e) {
                 // get text from plaintext text field
                 plainText = input.getText();
-
+	        inputs = plainText.split("\\s+");
+		
                 // gets keys from key text field and sets as the keys in cipher object
                 try {
                 key = keyInput.getText();
@@ -136,22 +148,27 @@ public class CryptographyGUI
                 keyB = Integer.parseInt(key.substring(key.indexOf(' ') + 1));
                 affineCipher.setKeyA(keyA);
                 affineCipher.setKeyB(keyB);
-
+		cipherText = "";
+		
                 // checks if encrypting or decrypting
-                if (encryptMode)
-                    cipherText = affineCipher.encrypt(plainText);
-                else
-                    cipherText = affineCipher.decrypt(plainText);
-
+		for(int i = 0; i < inputs.length; i++) {		
+		    if (encryptMode)
+			cipherText += affineCipher.encrypt(inputs[i]);
+		    else
+			cipherText += affineCipher.decrypt(inputs[i]);
+		    if(i < inputs.length - 1)
+			cipherText += " ";
+		}
                 // puts result in the output label
                 output.setText(cipherText);
                 } catch (Exception ex) {
                 // create popup
                 messagePopUp("Incorrect input for Affine Cipher.\nPlaintext " +
-                        "input is a String with only letters.\nKey takes 2 integers " +
+                        "input is a String without non-alphabetic characters.\nKey takes 2 integers " +
                         "(a and b) separated by a single space the first \ninteger " +
                         "being within the range 0 to 25 and the second greater than 0.\n" +
-                        "If Decrypting, the second integer must not be a coprime with 26", "Affine Cipher Input Error");
+                        "If Decrypting, the second integer must not be a coprime with 26",
+			     "Affine Cipher Input Error");
                 }
             }
             });
@@ -160,17 +177,23 @@ public class CryptographyGUI
             public void actionPerformed(ActionEvent e) {
                 // get text from plaintext text field
                 plainText = input.getText();
-
+	        inputs = plainText.split("\\s+");
+		
                 // gets key from key text field and sets as the key in cipher object
                 try {
                 key = keyInput.getText();
                 vigenereCipher.setCipherKey(key);
-
-                // checks if encrypting or decrypting
-                if (encryptMode)
-                    cipherText = vigenereCipher.encrypt(plainText);
-                else
-                    cipherText = vigenereCipher.decrypt(plainText);
+		cipherText = "";
+		
+		// checks if encrypting or decrypting
+		for(int i = 0; i < inputs.length; i++) {		
+		    if (encryptMode)
+			cipherText += vigenereCipher.encrypt(inputs[i]);
+		    else
+			cipherText += vigenereCipher.decrypt(inputs[i]);
+		    if(i < inputs.length - 1)
+			cipherText += " ";
+		}
 
                 // puts result in the output label
                 output.setText(cipherText);
@@ -178,7 +201,7 @@ public class CryptographyGUI
                 // create popup
                 messagePopUp("Incorrect input for Vigenere Cipher.\nPlaintext " +
                         "is a String with only letters.\nKey is a String with " +
-                        "only letters.\nSpaces and numbers will cause an exception " +
+                        "only letters.\nNumbers will cause an exception " +
                         "to be thrown", "Vigenere Cipher Input Error");
                 }
             }
@@ -188,35 +211,156 @@ public class CryptographyGUI
             public void actionPerformed(ActionEvent e) {
                 // get text from plaintext text field
                 plainText = input.getText();
-
+	        inputs = plainText.split("\\s+");
+		
                 // get key from key text field and set it as key in cipher object
                 try {
                     key = keyInput.getText();
                     bifidCipher.setCipherKey(key);
-
+		    cipherText = "";
+		    
                     // checks if encrypting or decrypting
-                    if (encryptMode)
-                        cipherText = bifidCipher.encrypt(plainText);
-                    else
-                        cipherText = bifidCipher.decrypt(plainText);
+		    for(int i = 0; i < inputs.length; i++) {		
+			if (encryptMode)
+			    cipherText += bifidCipher.encrypt(inputs[i]);
+			else
+			    cipherText += bifidCipher.decrypt(inputs[i]);
+			if(i < inputs.length - 1)
+			    cipherText += " ";
+		    }
 
-                    // puts result in the output label
+                    // Puts result in the output label
                     output.setText(cipherText);
                 } catch (Exception ex) {
                     // create popup
                     messagePopUp("Incorrect input for Bifid Cipher.\nPlaintext " +
                             "input can be any String so long as there are no numbers.\nKey " +
-                            "input can be any String that are not numbers.\nAll spaces and " +
-                            "other characters will be deleted from the String.", "Bifid Cipher Input Error");
+                            "input can be any String with at least one uppercase letter " +
+			    "as well as no numbers.\nAll non-alphabetic characters will " +
+			    "be deleted from the String.",
+			    "Bifid Cipher Input Error");
+                }
+            }	
+	    });
+
+	all = new JButton("All Ciphers");
+	all.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		    
+		// get text from plaintest test field
+		plainText = input.getText();
+	        inputs = plainText.split("\\s+");
+		// if in decryption, stores all texts for each string
+		if(!(encryptMode)) {
+		        decryptInputs = plainText.split(",");
+			for(int x = 0; x < decryptInputs.length; x++)
+			    System.out.println(decryptInputs[x]);
+			
+			shiftInputs = decryptInputs[0].split("\\s+");
+			affineInputs = decryptInputs[1].split("\\s+");
+			vigenereInputs = decryptInputs[2].split("\\s+");
+			bifidInputs = decryptInputs[3].split("\\s+");			
+	        }
+		    
+		try {
+		    
+		    // get keys for each cypher type
+		    key = keyInput.getText();
+		    String[] keyInputs = key.split(",");
+		    for(int x = 0; x < keyInputs.length; x++)
+			System.out.println(keyInputs[x]);
+		    int shiftKey = Integer.parseInt(keyInputs[0]);
+		    shiftCipher.setCipherKey(shiftKey);
+		    affineKeyA = Integer.parseInt(keyInputs[1].substring(0,
+						  keyInputs[1].indexOf(' ')));
+		    affineKeyB = Integer.parseInt(keyInputs[1].substring
+						  (keyInputs[1].indexOf(' ') + 1));
+		    affineCipher.setKeyA(affineKeyA);
+		    affineCipher.setKeyB(affineKeyB);
+		    vigenereCipher.setCipherKey(keyInputs[2]);
+		    bifidCipher.setCipherKey(keyInputs[3]);
+
+		    //Adds all encryption/decryption to output string
+		    cipherText = "Shift: ";
+		    if (encryptMode){
+			for(int a = 0; a < inputs.length; a++) {
+			    cipherText += shiftCipher.encrypt(inputs[a]);
+			    cipherText += " ";
+			}
+		    }
+		    else {
+			for(int a = 0; a < shiftInputs.length; a++) {
+			    cipherText += shiftCipher.decrypt(shiftInputs[a]);
+			    cipherText += " ";
+			}
+		    }
+		    
+		    System.out.println(cipherText);
+		    
+		    cipherText += "Affine: ";
+		    if (encryptMode){
+			for(int b = 0; b < inputs.length; b++) {
+			    cipherText += affineCipher.encrypt(inputs[b]);
+			    cipherText += " ";
+			}
+		    }
+		    else {
+			for(int b = 0; b < affineInputs.length; b++) {
+			    cipherText += affineCipher.decrypt(affineInputs[b]);
+			    cipherText += " ";
+			}
+		    }
+
+		    System.out.println(cipherText);
+
+		    cipherText += "Vigenere: ";
+		    if (encryptMode){
+			for(int c = 0; c < inputs.length; c++) {
+			    cipherText += vigenereCipher.encrypt(inputs[c]);
+			    cipherText += " ";
+			}
+		    }
+		    else {
+			for(int c = 0; c < vigenereInputs.length; c++) {
+			    cipherText += vigenereCipher.decrypt(vigenereInputs[c]);
+			    cipherText += " ";
+			}
+		    }
+		    
+		    System.out.println(cipherText);
+				    
+		    cipherText += "Bifid: ";
+		    if (encryptMode){
+			for(int d = 0; d < inputs.length; d++) {
+			    cipherText += shiftCipher.encrypt(inputs[d]);
+			    cipherText += " ";
+			}
+		    }
+		    else {
+			for(int d = 0; d < shiftInputs.length; d++) {
+			    cipherText += bifidCipher.decrypt(bifidInputs[d]);
+			    cipherText += " ";
+			}
+		    }
+		    
+		    System.out.println(cipherText);		    
+                    // puts result in the output label
+                    output.setText(cipherText);
+		    
+                } catch (Exception ex) {
+                    // create popup
+                    messagePopUp("WRONG KEYS", "All Cipher Input Error");
                 }
             }
-        });
-
+        });		    
+		    
+		 
         // adds cipher buttons to overall cipher button panel
         cipherButtonPanel.add(shift);
         cipherButtonPanel.add(affine);
         cipherButtonPanel.add(vigenere);
         cipherButtonPanel.add(bifid);
+	cipherButtonPanel.add(all);
 
         // creates panel for mode button
         modeButtonInfoPanel = new JPanel();
@@ -242,9 +386,10 @@ public class CryptographyGUI
         info.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // checks if encryption or decryption mode
-                messagePopUp("Format of Input for GUI:\n\nGeneral:\n    No spaces " +
-                        "are to be used in the key or plaintext input fields. \nCapital " +
-                        "letters can be used but will be translated to lowercase \nprior " +
+                messagePopUp("Format of Input for GUI:\n\nGeneral:\n    Spaces " +
+                        "can be used for plaintext input fields, but only certain keys " +
+			"utilize spaces. \nCapital letters for plaintext can be used " +
+			"but will be translated to lowercase \nprior " +
                         "to any cryptographic operation being performed on them.\n\nShift " +
                         "Cipher:\n    Key text field should contain a single integer " +
                         "within the range of 0 to 25 inclusive.\n\nAffine Cipher:\n    Key " +
@@ -255,8 +400,14 @@ public class CryptographyGUI
                         "coprime with 26 also holds.\n\nVigenere Cipher:\n    Key text field " +
                         "should contain a string of characters.\n\nBifid Cipher:\n    The " +
                         "plaintext for the Bifid Cipher can contain spaces but no numbers \nand " +
-                        "it will convert all characters to uppercase and remove all \nspaces. " +
-                        "Key text field should contain a string of characters\n","Info message");
+                        "it will convert all characters to uppercase. " +
+                        "Key text field should contain\n a string of characters with at least " +
+			"one uppercase letter.\n\n All Ciphers:\n    Keys should follow the format " +
+			"of the respective cyphers. \nAll four keys must be used and there " +
+                        "cannot be any spaces \nwithin the key string except " +
+			"for the affine cypher key.\nWhen decrypting, separate the plaintext inputs " +
+			"using \ncommas with no spaces before or after the comma."
+			     ,"Info message");
             }
         });
 
