@@ -1,3 +1,4 @@
+
 package edu.ucsb.cs56.projects.utilities.cryptography;
 
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.event.*;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
+import java.io.*;
 
 /**
    A class to implement the Cryptography GUI.
@@ -28,7 +30,7 @@ public class CryptographyGUI
 
     String plainText = null;
     String cipherText = null;
-    int keyA, keyB, affineKeyA, affineKeyB;
+    int shiftKey, keyA, keyB, affineKeyA, affineKeyB, last;
     String key;
     String[] inputs;
     String[] decryptInputs;
@@ -38,7 +40,7 @@ public class CryptographyGUI
     String[] bifidInputs;
 
     JFrame frame;
-    JButton shift, vigenere, affine, bifid, all, mode, info;
+    JButton shift, vigenere, affine, bifid, all, current, mode, info;
     JPanel buttonPanel, cipherButtonPanel, modeButtonInfoPanel, textFieldPanel, inputTextPanel, inputKeyTextPanel;
     JTextField input, keyInput;
     JLabel output, inputText, inputKeyText;
@@ -110,8 +112,8 @@ public class CryptographyGUI
 
                 // get key from key text field and set it as key in cipher object
                 try {
-                keyA = Integer.parseInt(keyInput.getText());
-                shiftCipher.setCipherKey(keyA);
+                shiftKey = Integer.parseInt(keyInput.getText());
+                shiftCipher.setCipherKey(shiftKey);
 		cipherText = "";
                 // checks if encrypting or decrypting
 		for(int i = 0; i < inputs.length; i++) {
@@ -123,8 +125,26 @@ public class CryptographyGUI
 			cipherText += " ";
 		}
 		
-                // puts result in the output label
+
+		try {
+		    PrintWriter out = new PrintWriter("output.txt");
+		    
+		    for(int i = 0; i < inputs.length; i++) {
+			out.print(inputs[i]);
+			out.print(" ");
+		    }
+		    out.println();
+		    out.println(keyInput.getText());
+		    out.println(cipherText);
+		    out.close();
+		}
+		catch (Exception ex){
+		    ex.printStackTrace();
+		}
+		// puts result in the output label
                 output.setText(cipherText);
+		last = 0;
+
                 } catch (Exception ex) {
                 // create popup
                 messagePopUp("Incorrect input for Shift Cipher.\nPlaintext is " +
@@ -140,8 +160,7 @@ public class CryptographyGUI
                 // get text from plaintext text field
                 plainText = input.getText();
 	        inputs = plainText.split("\\s+");
-		
-                // gets keys from key text field and sets as the keys in cipher object
+		                // gets keys from key text field and sets as the keys in cipher object
                 try {
                 key = keyInput.getText();
                 keyA = Integer.parseInt(key.substring(0, key.indexOf(' ')));
@@ -159,8 +178,26 @@ public class CryptographyGUI
 		    if(i < inputs.length - 1)
 			cipherText += " ";
 		}
-                // puts result in the output label
+                
+		try {
+		    PrintWriter out = new PrintWriter("output.txt");
+		    
+		    for(int i = 0; i < inputs.length; i++) {
+			out.print(inputs[i]);
+			out.print(" ");
+		    }
+		    out.println();
+		    out.println(keyInput.getText());
+		    out.println(cipherText);
+		    out.close();
+		}
+		catch (Exception ex){
+		    ex.printStackTrace();
+		}
+		// puts result in the output label
                 output.setText(cipherText);
+		last = 1;
+		
                 } catch (Exception ex) {
                 // create popup
                 messagePopUp("Incorrect input for Affine Cipher.\nPlaintext " +
@@ -195,8 +232,26 @@ public class CryptographyGUI
 			cipherText += " ";
 		}
 
+		try {
+		    PrintWriter out = new PrintWriter("output.txt");
+		    
+		    for(int i = 0; i < inputs.length; i++) {
+			out.print(inputs[i]);
+			out.print(" ");
+		    }
+		    out.println();
+		    out.println(keyInput.getText());
+		    out.println(cipherText);
+		    out.close();
+		}
+		catch (Exception ex){
+		    ex.printStackTrace();
+		}
+		
                 // puts result in the output label
                 output.setText(cipherText);
+		last = 2;
+		
                 } catch (Exception ex) {
                 // create popup
                 messagePopUp("Incorrect input for Vigenere Cipher.\nPlaintext " +
@@ -215,22 +270,40 @@ public class CryptographyGUI
 		
                 // get key from key text field and set it as key in cipher object
                 try {
-                    key = keyInput.getText();
-                    bifidCipher.setCipherKey(key);
-		    cipherText = "";
+                key = keyInput.getText();
+		bifidCipher.setCipherKey(key);
+		cipherText = "";
+		
+		// checks if encrypting or decrypting
+		for(int i = 0; i < inputs.length; i++) {		
+		    if (encryptMode)
+			cipherText += bifidCipher.encrypt(inputs[i]);
+		    else
+			cipherText += bifidCipher.decrypt(inputs[i]);
+		    if(i < inputs.length - 1)
+			cipherText += " ";
+		}
+		
+		try {
+		    PrintWriter out = new PrintWriter("output.txt");
 		    
-                    // checks if encrypting or decrypting
-		    for(int i = 0; i < inputs.length; i++) {		
-			if (encryptMode)
-			    cipherText += bifidCipher.encrypt(inputs[i]);
-			else
-			    cipherText += bifidCipher.decrypt(inputs[i]);
-			if(i < inputs.length - 1)
-			    cipherText += " ";
+		    for(int i = 0; i < inputs.length; i++) {
+			out.print(inputs[i]);
+			out.print(" ");
 		    }
+		    out.println();
+		    out.println(keyInput.getText());
+		    out.println(cipherText);
+		    out.close();
+		}
+		catch (Exception ex){
+		    ex.printStackTrace();
+		}
 
-                    // Puts result in the output label
-                    output.setText(cipherText);
+		// Puts result in the output label
+		output.setText(cipherText);
+		last = 3;
+		
                 } catch (Exception ex) {
                     // create popup
                     messagePopUp("Incorrect input for Bifid Cipher.\nPlaintext " +
@@ -279,71 +352,72 @@ public class CryptographyGUI
 		    affineCipher.setKeyB(affineKeyB);
 		    vigenereCipher.setCipherKey(keyInputs[2]);
 		    bifidCipher.setCipherKey(keyInputs[3]);
-
+		    cipherText = "";
 		    //Adds all encryption/decryption to output string
-		    cipherText = "Shift: ";
-		    if (encryptMode){
+		    if(encryptMode) {
+			cipherText = "Shift: ";
 			for(int a = 0; a < inputs.length; a++) {
 			    cipherText += shiftCipher.encrypt(inputs[a]);
 			    cipherText += " ";
 			}
-		    }
-		    else {
-			for(int a = 0; a < shiftInputs.length; a++) {
-			    cipherText += shiftCipher.decrypt(shiftInputs[a]);
-			    cipherText += " ";
-			}
-		    }
-		    
-		    System.out.println(cipherText);
-		    
-		    cipherText += "Affine: ";
-		    if (encryptMode){
+			cipherText += "Affine: ";
 			for(int b = 0; b < inputs.length; b++) {
 			    cipherText += affineCipher.encrypt(inputs[b]);
 			    cipherText += " ";
 			}
-		    }
-		    else {
-			for(int b = 0; b < affineInputs.length; b++) {
-			    cipherText += affineCipher.decrypt(affineInputs[b]);
-			    cipherText += " ";
-			}
-		    }
-
-		    System.out.println(cipherText);
-
-		    cipherText += "Vigenere: ";
-		    if (encryptMode){
+			cipherText += "Vigenere: ";
 			for(int c = 0; c < inputs.length; c++) {
 			    cipherText += vigenereCipher.encrypt(inputs[c]);
 			    cipherText += " ";
 			}
+			cipherText += "Bifid: ";
+			for(int d = 0; d < inputs.length; d++) {
+			    cipherText += bifidCipher.encrypt(inputs[d]);
+			    cipherText += " ";
+			}
 		    }
 		    else {
+			cipherText = "Shift: ";
+			for(int a = 0; a < shiftInputs.length; a++) {
+			    cipherText += shiftCipher.decrypt(shiftInputs[a]);
+			    cipherText += " ";
+			}
+			
+			cipherText += "Affine: ";
+			for(int b = 0; b < affineInputs.length; b++) {
+			    cipherText += affineCipher.decrypt(affineInputs[b]);
+			    cipherText += " ";
+			}
+			
+			cipherText += "Vigenere: ";
 			for(int c = 0; c < vigenereInputs.length; c++) {
 			    cipherText += vigenereCipher.decrypt(vigenereInputs[c]);
 			    cipherText += " ";
 			}
-		    }
-		    
-		    System.out.println(cipherText);
-				    
-		    cipherText += "Bifid: ";
-		    if (encryptMode){
-			for(int d = 0; d < inputs.length; d++) {
-			    cipherText += shiftCipher.encrypt(inputs[d]);
-			    cipherText += " ";
-			}
-		    }
-		    else {
+			
+			cipherText += "Bifid: ";
 			for(int d = 0; d < shiftInputs.length; d++) {
 			    cipherText += bifidCipher.decrypt(bifidInputs[d]);
 			    cipherText += " ";
 			}
 		    }
 		    
-		    System.out.println(cipherText);		    
+		    try {
+			PrintWriter out = new PrintWriter("output.txt");
+		    
+			for(int i = 0; i < inputs.length; i++) {
+			    out.print(inputs[i]);
+			    out.print(" ");
+			}
+			out.println();
+			out.println(keyInput.getText());
+			out.println(cipherText);
+			out.close();
+		    }
+		    catch (Exception ex){
+			ex.printStackTrace();
+		    }
+		    System.out.println(cipherText);
                     // puts result in the output label
                     output.setText(cipherText);
 		    
@@ -353,7 +427,107 @@ public class CryptographyGUI
                 }
             }
         });		    
+
+	current = new JButton("Current");
+	current.addActionListener(new ActionListener() {
+	   public void actionPerformed(ActionEvent e) {
+	        // checks if encryption or decryption mode and switches
+                if (encryptMode) {
+                encryptMode = false;
+                } else {
+                encryptMode = true;
+                }
+		output.setText("");
+		input.setText("");
+		keyInput.setText("");
+		String currentCipher = "";
+		try {
+		    inputs = cipherText.split("\\s+");
+		    if(last == 0) {
+			shiftCipher.setCipherKey(shiftKey);
+		    }
+		    if(last == 1) {
+			affineCipher.setKeyA(keyA);
+			affineCipher.setKeyB(keyB);
+		    }
+		    if(last == 2)
+			vigenereCipher.setCipherKey(key);
+		    if(last == 3)
+		    bifidCipher.setCipherKey(key);
+		    //Adds all encryption/decryption to output string
+
+		    if(last == 0) {
+			for(int i = 0; i < inputs.length; i++) {
+			    if (encryptMode)
+				currentCipher += shiftCipher.encrypt(inputs[i]);
+			    else
+				currentCipher += shiftCipher.decrypt(inputs[i]);
+			    if(i < inputs.length - 1)
+				currentCipher += " ";
+			}
+		    }
+		    if(last == 1) {
+		        for(int i = 0; i < inputs.length; i++) {		
+			    if (encryptMode)
+				currentCipher += affineCipher.encrypt(inputs[i]);
+			    else
+				currentCipher += affineCipher.decrypt(inputs[i]);
+			    if(i < inputs.length - 1)
+				currentCipher += " ";
+			}
+		    }
+		    if(last == 2) {
+			for(int i = 0; i < inputs.length; i++) {		
+			    if (encryptMode)
+				currentCipher += vigenereCipher.encrypt(inputs[i]);
+			    else
+				currentCipher += vigenereCipher.decrypt(inputs[i]);
+			    if(i < inputs.length - 1)
+				currentCipher += " ";
+			}
+		    }
+		    if(last == 3) {
+		        for(int i = 0; i < inputs.length; i++) {		
+			    if (encryptMode)
+				currentCipher += bifidCipher.encrypt(inputs[i]);
+			    else
+				currentCipher += bifidCipher.decrypt(inputs[i]);
+			    if(i < inputs.length - 1)
+				currentCipher += " ";
+			}
+		    }
+		    try {
+			PrintWriter out = new PrintWriter("output.txt");
 		    
+			for(int i = 0; i < inputs.length; i++) {
+			    out.print(inputs[i]);
+			    out.print(" ");
+			}
+			out.println();
+			out.println(keyInput.getText());
+			out.println(cipherText);
+			out.close();
+		    }
+		    catch (Exception ex){
+			ex.printStackTrace();
+		    }
+		    
+                    // puts result in the output label
+		    
+                    output.setText(currentCipher);
+		    if (encryptMode) {
+			encryptMode = false;
+		    } else {
+			encryptMode = true;
+		    }
+                } catch (Exception ex) {
+                    // create popup
+                    messagePopUp("Please do not change input fields to decrypt " +
+				 " or encrypt current cipher text.", "Curent Cipher Error");
+                }
+	   }
+	   });
+	
 		 
         // adds cipher buttons to overall cipher button panel
         cipherButtonPanel.add(shift);
@@ -361,6 +535,7 @@ public class CryptographyGUI
         cipherButtonPanel.add(vigenere);
         cipherButtonPanel.add(bifid);
 	cipherButtonPanel.add(all);
+	cipherButtonPanel.add(current);
 
         // creates panel for mode button
         modeButtonInfoPanel = new JPanel();
@@ -405,7 +580,10 @@ public class CryptographyGUI
 			"one uppercase letter.\n\n All Ciphers:\n    Keys should follow the format " +
 			"of the respective cyphers. \nAll four keys must be used and there " +
                         "cannot be any spaces \nwithin the key string except " +
-			"for the affine cypher key.\nWhen decrypting, separate the plaintext inputs " +
+			"for the affine cypher key.\nCurrent: Do not change or input new strings " +
+			"into the input or key text fields. \nThe program will clear the textfields " +
+			"and will encrypt or decrypt the last encrypted string."+
+                        "\nWhen decrypting, separate the plaintext inputs " +
 			"using \ncommas with no spaces before or after the comma."
 			     ,"Info message");
             }
