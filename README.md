@@ -1,5 +1,10 @@
 cs56-utilities-Cryptography
 ===========================
+Run the project by typing
+```
+ ant run
+```
+
 
 project history
 ===============
@@ -7,7 +12,7 @@ project history
  YES | mastergberry | Implementation of 3 different types of string ciphers, both encryption and decryption.
 ```
 
-Implementation of 3 different types of ciphers:
+Implementation of 4 different types of ciphers:
 	       -Shift Cipher
 	       -Affine Cipher
 	       -Vigenere Cipher
