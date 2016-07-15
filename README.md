@@ -5,7 +5,7 @@ Run the project by typing
  ant run
 ```
 javadoc website: https://ucsb-cs56-m16.github.io/cs56_utilities_cryptography_javadoc/javadoc/index.html
-javadoc repo:
+javadoc repo: https://github.com/UCSB-CS56-M16/cs56_utilities_cryptography_javadoc
 
 project history
 ===============
