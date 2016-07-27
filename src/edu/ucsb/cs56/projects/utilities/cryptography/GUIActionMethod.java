@@ -27,9 +27,8 @@ public class GUIActionMethod {
 		this.allGUI=allGUI;
 	}
 	
-	/*
-	 * Check whether in decryption mode or encryption mode
-	*/
+	
+	//  Check whether in decryption mode or encryption mode	
 	public  void checkMode() throws Exception {
 		//if in Decryption Mode throw exception
 		if(!GUI.encryptMode) {
@@ -38,9 +37,8 @@ public class GUIActionMethod {
 			throw new Exception();}
 	}
 
-	/*
-	 * encrypt/decrypt using shift cipher
-	 */
+	
+	// encrypt/decrypt using shift cipher	 
 	public void ExecuteShift(){
 		if(GUI.ShKeyInput.getText().equals(null)||GUI.ShKeyInput.getText().length()==0){
 			for (int j=0;j<GUI.storedKey.size();++j){
@@ -104,9 +102,7 @@ public class GUIActionMethod {
 	}
 
 	
-	/*
-	 * encrypt/decrypt using affiner cipher
-	 */
+	//encrypt/decrypt using affiner cipher
 	public void ExecuteAffine(){
 		if((GUI.AfKeyInput.getText().equals(null)||GUI.AfKeyInput.getText().length()==0)&&!GUI.encryptMode){
 			for (int j=0;j<GUI.storedKey.size();++j){
@@ -178,10 +174,7 @@ public class GUIActionMethod {
 		}
 	}
 
-	
-	/*
-	 * encrypt/decrypt using vigenere cipher
-	 */
+	//encrypt/decrypt using vigenere cipher
 	public void ExecuteVigenere(){
 		// get text from plaintext text field
 		GUI.plainText = GUI.inputArea.getText();
@@ -244,9 +237,8 @@ public class GUIActionMethod {
 					"to be thrown", "Vigenere Cipher Input Error");}
 	}
 
-	/*
-	 * encrypt/decrypt using bifid cipher
-	 */
+	
+	//encrypt/decrypt using bifid cipher	 
 	public void ExecuteBifid(){
 		if((GUI.BiKeyInput.getText().equals(null)||GUI.BiKeyInput.getText().length()==0)&&!GUI.encryptMode){
 			for (int j=0;j<GUI.storedKey.size();++j){
@@ -312,9 +304,8 @@ public class GUIActionMethod {
 		}
 	}
 
-	/*
-	 * generate random key of affine cipher
-	 */
+	
+	 // generate random key of affine cipher	 
 	public void AffineGenKey(){
 		// get text from plaintext text field
 		GUI.plainText = GUI.inputArea.getText();
@@ -335,9 +326,8 @@ public class GUIActionMethod {
 		GUI.AfKeyInput.setText(GUI.affineKeyA+" "+GUI.affineKeyB);
 	}
 
-	/*
-	 * generate random key of bifid cipher
-	 */
+	
+	 // generate random key of bifid cipher	 
 	public void BifidGenKey(){
 		// get text from plaintext text field
 		GUI.plainText = GUI.inputArea.getText();
@@ -356,9 +346,8 @@ public class GUIActionMethod {
 		GUI.BiKeyInput.setText(GUI.key);
 	}
 
-	/*
-	 * generate random key of shift cipher
-	 */
+	
+	 //generate random key of shift cipher	 
 	public void ShiftGenKey(){
 		// get text from plaintext text field
 		GUI.plainText = GUI.inputArea.getText();
@@ -378,9 +367,8 @@ public class GUIActionMethod {
 		GUI.ShKeyInput.setText(Integer.toString(GUI.shiftKey));
 	}
 
-	/*
-	 * generate random key of vigenere cipher
-	 */
+	
+	 //generate random key of vigenere cipher	 
 	public void VigenereGenKey(){
 		// get text from plaintext text field
 		GUI.plainText = GUI.inputArea.getText();
@@ -399,9 +387,8 @@ public class GUIActionMethod {
 		GUI.ViKeyInput.setText(GUI.key);
 	}
 
-	/*
-	 * generate random key of all ciphers
-	 */
+	
+	 //generate random key of all ciphers	 
 	public void AllGenKey(){
 		try{
 			//check if in decryption mode
@@ -437,9 +424,8 @@ public class GUIActionMethod {
 	}
 
 	
-	/*
-	 * encrypt/decrypt using all ciphers
-	 */
+	
+	 // encrypt/decrypt using all ciphers
 	public void ExecuteAll(){
 		
 		// get text from plaintest test field
@@ -558,9 +544,8 @@ public class GUIActionMethod {
 		}
 	}
 
-	/*
-	 * present current text
-	 */
+	
+	 //present current text	 
 	public void ExecuteCurrent(){
 		// checks if encryption or decryption mode and switches
 		if (GUI.encryptMode) {
@@ -662,9 +647,8 @@ public class GUIActionMethod {
 
 	}
 
-	/*
-	 * prompt the information by clicking info button
-	 */
+	
+	 // prompt the information by clicking info button	 
 	public void SendInfo(){
 		GUI.messagePopUp("Format of Input for GUI:\n\nGeneral:\n    Spaces " +
 				"can be used for plaintext input fields, but only certain keys " +
@@ -695,18 +679,17 @@ public class GUIActionMethod {
 				,"Info message");
 	}
 	
-	/*
-	 * switch to encrypt mode
-	 */
+	
+	 //switch to encrypt mode
+	 
 	public void SwitchToEncrypt(){
 		GUI.encryptMode = true;//switch to encryptmode
 		GUI.inputText.setText("Plain Text: ");
 		GUI.outputText.setText("Ciphered Text: ");
 	}
 
-	/*
-	 * switch to decrypt mode
-	 */
+	
+	// switch to decrypt mode	 
 	public void SwitchToDecrypt(){
 		GUI.encryptMode = false;//switch to decryptmode
 		GUI.inputText.setText("Ciphered Text: ");
@@ -714,18 +697,16 @@ public class GUIActionMethod {
 
 	}
 
-	/*
-	 * copy the output text
-	 */
+	
+	// copy the output text	 
 	public void Copy(){
 		StringSelection stringSelection = new StringSelection(GUI.outputArea.getText());
 		Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 		clpbrd.setContents(stringSelection, null);
 	}
 
-	/*
-	 * clean the corresponding textarea
-	 */
+	
+	// clean the corresponding textarea	 
 	public void Clean_01(){
 		GUI.inputArea.setText("");
 		GUI.outputArea.setText("");
@@ -735,18 +716,16 @@ public class GUIActionMethod {
 		GUI.BiKeyInput.setText("");
 	}
 
-	/*
-	 * clean the corresponding textarea
-	 */
+	
+	// clean the corresponding textarea	 
 	public void Clean_02(){
 		allGUI.inputArea.setText("");
 		allGUI.outputArea.setText("");
 		allGUI.AllKeyInput.setText("");
 	}
 
-	/*
-	 * prompt the GUI when clicking all cipher button
-	 */
+	
+	  //prompt the GUI when clicking all cipher button
 	public void MakeAllCipherGUI(){
 		AllCipherGUI allcipherGUI = new AllCipherGUI(GUI);
 		allcipherGUI.createFrame();
