@@ -96,3 +96,14 @@ W16 final remarks:
 -After each cipher, the program will write to a file called "output.txt"
 
 The program itself takes in an input string and input key to encrypt or decrypt the input string. Each encryption cipher has already been defined and most of the work will be in the Cryptography.java file. There is a lot of opportunity to refactor some of the JButton codes. 
+
+
+M16 final remarks:
+
+-The methods of encryption and decryption have not been changed.
+-Now, you can generate random keys.
+-A new GUI has been added.
+-You get another window when clicking all ciphers
+-The keys and ciphered text will be saved to a file, default named output.txt.
+-You can decide where the output file will be saved
+-The methods of anonymous ActionListener class are factored out to a class called GUIActionMethid.
