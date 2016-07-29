@@ -106,10 +106,23 @@ M16 final remarks:
 
 -A new GUI has been added.
 
--You get another window when clicking all ciphers
+-Now, you can look at the javadoc on website.
 
 -The keys and ciphered text will be saved to a file, default named output.txt.
 
 -You can decide where the output file will be saved
 
 -The methods of anonymous ActionListener class are factored out to a class called GUIActionMethid.
+
+-The lambda function has been used on implementing anonymous ActionListener.
+
+-You get another window for all ciphers
+
+
+
+
+
+
+
+
+
