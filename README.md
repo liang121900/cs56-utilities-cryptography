@@ -101,9 +101,15 @@ The program itself takes in an input string and input key to encrypt or decrypt 
 M16 final remarks:
 
 -The methods of encryption and decryption have not been changed.
+
 -Now, you can generate random keys.
+
 -A new GUI has been added.
+
 -You get another window when clicking all ciphers
+
 -The keys and ciphered text will be saved to a file, default named output.txt.
+
 -You can decide where the output file will be saved
+
 -The methods of anonymous ActionListener class are factored out to a class called GUIActionMethid.
