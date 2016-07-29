@@ -175,7 +175,7 @@ public class CryptographyGUI
 		inputTextPanel.add(new JScrollPane(inputArea));
 
 		//add address and file name label and  text area
-		address=new JLabel("Save Address:");
+		address=new JLabel("Save Address:(e.g. /Documents)");
 		fileName=new JLabel("Save Name:");
 		addressText=new JTextArea("",3,20);
 		addressText.setLineWrap(true);
