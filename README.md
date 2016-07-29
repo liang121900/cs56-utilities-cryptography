@@ -103,13 +103,10 @@ The program itself takes in an input string and input key to encrypt or decrypt 
 
 M16 final remarks:
 
--The methods of encryption and decryption have not been changed.
-
--Now, you can generate random keys.
-
--A new GUI has been added, which have one big input text area and output text area, four seperate key input areas.
-
--Now, you can look at the javadoc on website.
+1. The methods of encryption and decryption have not been changed.
+2. Now, you can generate random keys.
+3. A new GUI has been added, which have one big input text area and output text area, four seperate key input areas.
+4. Now, you can look at the javadoc on website.
 
 -The keys and ciphered text will be saved to a file, default named output.txt.
 
