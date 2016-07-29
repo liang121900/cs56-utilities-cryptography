@@ -91,8 +91,11 @@ Bifid Cipher:
 W16 final remarks:
 
 -Most of ciphers have not been changed and have only been implemented differently.
+
 -Now you can input more than one string with spaces in between.
+
 -You can now use all the ciphers at once to encrypt one string.
+
 -After each cipher, the program will write to a file called "output.txt"
 
 The program itself takes in an input string and input key to encrypt or decrypt the input string. Each encryption cipher has already been defined and most of the work will be in the Cryptography.java file. There is a lot of opportunity to refactor some of the JButton codes. 
@@ -104,7 +107,7 @@ M16 final remarks:
 
 -Now, you can generate random keys.
 
--A new GUI has been added.
+-A new GUI has been added, which have one big input text area and output text area, four seperate key input areas.
 
 -Now, you can look at the javadoc on website.
 
@@ -113,7 +116,6 @@ M16 final remarks:
 -You can decide where the output file will be saved
 
 -The methods of anonymous ActionListener class are factored out to a class called GUIActionMethid.
-
 
 -The lambda function has been used on implementing anonymous ActionListener.
 
