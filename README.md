@@ -114,10 +114,10 @@ M16 final remarks:
 
 -The methods of anonymous ActionListener class are factored out to a class called GUIActionMethid.
 
+
 -The lambda function has been used on implementing anonymous ActionListener.
 
--You get another window for all ciphers
-
+-You get another window for all ciphers and the class
 
 
 
