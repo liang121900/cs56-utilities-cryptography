@@ -121,7 +121,11 @@ M16 final remarks:
 
 -If you want to modify or add new function for each widget, for example, to edit error message, you may look at the GUIActionMethod class.
 
--If you want to add new widget modify the GUI, you may look at the 
+-If you want to add new widget or modify the GUI, you may look at the CryptographyGUI class or AllCipherGUI classes.
+
+-If you edit or add algorithm for ciphers, you may look at the classes AffineCipher, ShiftCipher...
+
+
 
 
 
