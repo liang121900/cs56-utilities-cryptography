@@ -80,7 +80,7 @@ Shift Cipher:
 	Key text field should contain a single integer within the range of 0 to 25 inclusive.
 
 Affine Cipher:
-	Key text field should contain two integers seperated by a single space, with the first integer being with the range of 0 to 25 inclusive and the second integer being greater than 0. If decrypting, the additional condition that the first integer must not be a coprime with 26 also holds.
+	Key text field should contain two integers seperated by a single space, with the first integer being with the range of 0 to 25 inclusive and the second integer being greater than 0. If decrypting, the additional condition that the first integer must be a coprime with 26 also holds.
 
 Vigenere Cipher:
 	Key text field should contain a string of characters.
