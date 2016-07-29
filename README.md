@@ -117,7 +117,11 @@ M16 final remarks:
 
 -The lambda function has been used on implementing anonymous ActionListener.
 
--You get another window for all ciphers and the class
+-You get another window for all ciphers and the class AllCipherGUI is for that window.
+
+-If you want to modify or add new function for each widget, for example, to edit error message, you may look at the GUIActionMethod class.
+
+-If you want to add new widget modify the GUI, you may look at the 
 
 
 
